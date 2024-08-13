@@ -24,7 +24,6 @@ pub(crate) use self::monitor::{MonitorHandle, VideoModeHandle};
 pub(crate) use self::window::{Window, WindowId};
 pub(crate) use self::window_delegate::PlatformSpecificWindowAttributes;
 pub(crate) use crate::cursor::OnlyCursorImageSource as PlatformCustomCursorSource;
-use crate::event::DeviceId as RootDeviceId;
 pub(crate) use crate::icon::NoIcon as PlatformIcon;
 pub(crate) use crate::platform_impl::Fullscreen;
 
@@ -37,9 +36,6 @@ impl DeviceId {
         DeviceId
     }
 }
-
-// Constant device ID; to be removed when if backend is updated to report real device IDs.
-pub(crate) const DEVICE_ID: RootDeviceId = RootDeviceId(DeviceId);
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct FingerId;

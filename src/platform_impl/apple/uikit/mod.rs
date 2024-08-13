@@ -18,7 +18,6 @@ pub(crate) use self::window::{PlatformSpecificWindowAttributes, Window, WindowId
 pub(crate) use crate::cursor::{
     NoCustomCursor as PlatformCustomCursor, NoCustomCursor as PlatformCustomCursorSource,
 };
-use crate::event::DeviceId as RootDeviceId;
 pub(crate) use crate::icon::NoIcon as PlatformIcon;
 pub(crate) use crate::platform_impl::Fullscreen;
 
@@ -35,8 +34,6 @@ impl DeviceId {
         DeviceId
     }
 }
-
-pub(crate) const DEVICE_ID: RootDeviceId = RootDeviceId(DeviceId);
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct FingerId(usize);

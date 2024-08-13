@@ -125,6 +125,7 @@ pub enum DeviceId {
     #[cfg(x11_platform)]
     X(x11::DeviceId),
     #[cfg(wayland_platform)]
+    #[allow(unused)]
     Wayland(wayland::DeviceId),
 }
 

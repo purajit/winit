@@ -98,9 +98,6 @@ impl FingerId {
     }
 }
 
-// Constant device ID, to be removed when this backend is updated to report real device IDs.
-const DEVICE_ID: RootDeviceId = RootDeviceId(DeviceId(0));
-
 fn wrap_device_id(id: u32) -> RootDeviceId {
     RootDeviceId(DeviceId(id))
 }

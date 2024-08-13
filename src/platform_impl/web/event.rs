@@ -1,18 +1,21 @@
 #[derive(Debug, Copy, Clone, Eq, PartialEq, PartialOrd, Ord, Hash)]
-pub enum DeviceId {
-    Wheel,
-    Keyboard,
-    Id(i32),
-}
+pub struct DeviceId(u32);
 
 impl DeviceId {
-    pub fn new(pointer_id: i32) -> Self {
-        Self::Id(pointer_id)
+    pub fn new(pointer_id: i32) -> Option<Self> {
+        if let Ok(pointer_id) = u32::try_from(pointer_id) {
+            Some(Self(pointer_id))
+        } else if pointer_id == -1 {
+            None
+        } else {
+            tracing::error!("found unexpected negative `PointerEvent.pointerId`: {pointer_id}");
+            None
+        }
     }
 
     #[cfg(test)]
     pub const fn dummy() -> Self {
-        Self::Id(-1)
+        Self(0)
     }
 }
 
