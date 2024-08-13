@@ -30,6 +30,7 @@ pub(crate) use crate::platform_impl::Fullscreen;
 pub struct DeviceId;
 
 impl DeviceId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         DeviceId
     }
@@ -41,6 +42,7 @@ pub(crate) const DEVICE_ID: RootDeviceId = RootDeviceId(DeviceId);
 pub struct FingerId(usize);
 
 impl FingerId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         FingerId(0)
     }

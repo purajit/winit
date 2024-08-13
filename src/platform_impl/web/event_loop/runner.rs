@@ -327,7 +327,7 @@ impl Shared {
 
                 if let Some(delta) = backend::event::mouse_scroll_delta(&window, &event) {
                     runner.send_event(Event::DeviceEvent {
-                        device_id: RootDeviceId(DeviceId::dummy()),
+                        device_id: RootDeviceId(DeviceId::Wheel),
                         event: DeviceEvent::MouseWheel { delta },
                     });
                 }
@@ -381,7 +381,7 @@ impl Shared {
                 }
 
                 runner.send_event(Event::DeviceEvent {
-                    device_id: RootDeviceId(DeviceId::dummy()),
+                    device_id: RootDeviceId(DeviceId::Keyboard),
                     event: DeviceEvent::Key(RawKeyEvent {
                         physical_key: backend::event::key_code(&event),
                         state: ElementState::Pressed,
@@ -399,7 +399,7 @@ impl Shared {
                 }
 
                 runner.send_event(Event::DeviceEvent {
-                    device_id: RootDeviceId(DeviceId::dummy()),
+                    device_id: RootDeviceId(DeviceId::Keyboard),
                     event: DeviceEvent::Key(RawKeyEvent {
                         physical_key: backend::event::key_code(&event),
                         state: ElementState::Released,

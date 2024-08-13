@@ -22,6 +22,7 @@ mod window;
 pub struct DeviceId;
 
 impl DeviceId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         DeviceId
     }
@@ -31,6 +32,7 @@ impl DeviceId {
 pub struct FingerId(i32);
 
 impl FingerId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         FingerId(0)
     }

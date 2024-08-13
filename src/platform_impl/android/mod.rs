@@ -668,10 +668,6 @@ impl OwnedDisplayHandle {
 pub(crate) struct WindowId;
 
 impl WindowId {
-    pub const fn dummy() -> Self {
-        WindowId
-    }
-
     pub const fn into_raw(self) -> u64 {
         0
     }
@@ -685,6 +681,7 @@ impl WindowId {
 pub struct DeviceId(i32);
 
 impl DeviceId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         DeviceId(0)
     }
@@ -694,6 +691,7 @@ impl DeviceId {
 pub struct FingerId(i32);
 
 impl FingerId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         FingerId(0)
     }

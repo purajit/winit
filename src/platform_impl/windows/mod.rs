@@ -63,6 +63,7 @@ unsafe impl Sync for PlatformSpecificWindowAttributes {}
 pub struct DeviceId(u32);
 
 impl DeviceId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         DeviceId(0)
     }
@@ -85,6 +86,7 @@ pub struct FingerId {
 }
 
 impl FingerId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         FingerId { id: 0, primary: false }
     }
@@ -115,10 +117,6 @@ unsafe impl Send for WindowId {}
 unsafe impl Sync for WindowId {}
 
 impl WindowId {
-    pub const fn dummy() -> Self {
-        WindowId(0)
-    }
-
     pub const fn into_raw(self) -> u64 {
         self.0 as u64
     }

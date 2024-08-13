@@ -111,10 +111,6 @@ pub(crate) static X11_BACKEND: Lazy<Mutex<Result<Arc<XConnection>, XNotSupported
 pub struct WindowId(u64);
 
 impl WindowId {
-    pub const fn dummy() -> Self {
-        Self(0)
-    }
-
     pub const fn into_raw(self) -> u64 {
         self.0
     }
@@ -133,6 +129,7 @@ pub enum DeviceId {
 }
 
 impl DeviceId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         #[cfg(wayland_platform)]
         return DeviceId::Wayland(wayland::DeviceId::dummy());
@@ -150,6 +147,7 @@ pub enum FingerId {
 }
 
 impl FingerId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         #[cfg(wayland_platform)]
         return FingerId::Wayland(wayland::FingerId::dummy());

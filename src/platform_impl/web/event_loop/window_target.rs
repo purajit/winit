@@ -144,7 +144,7 @@ impl ActiveEventLoop {
                     }
                 });
 
-                let device_id = RootDeviceId(DeviceId::dummy());
+                let device_id = RootDeviceId(DeviceId::Keyboard);
 
                 runner.send_events(
                     iter::once(Event::WindowEvent {
@@ -180,7 +180,7 @@ impl ActiveEventLoop {
                     }
                 });
 
-                let device_id = RootDeviceId(DeviceId::dummy());
+                let device_id = RootDeviceId(DeviceId::Keyboard);
 
                 runner.send_events(
                     iter::once(Event::WindowEvent {
@@ -502,7 +502,7 @@ impl ActiveEventLoop {
                 Event::WindowEvent {
                     window_id: RootWindowId(id),
                     event: WindowEvent::MouseWheel {
-                        device_id: RootDeviceId(DeviceId::dummy()),
+                        device_id: RootDeviceId(DeviceId::Keyboard),
                         delta,
                         phase: TouchPhase::Moved,
                     },

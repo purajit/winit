@@ -153,6 +153,7 @@ changelog entry.
 - On Android, remove all `MonitorHandle` support instead of emitting false data.
 - Remove `impl From<u64> for WindowId` and `impl From<WindowId> for u64`. Replaced with
   `WindowId::into_raw()` and `from_raw()`.
+- Remove `dummy()` from `WindowId` and `DeviceId`.
 
 ### Fixed
 

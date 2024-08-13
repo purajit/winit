@@ -439,21 +439,9 @@ pub enum WindowEvent {
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DeviceId(pub(crate) platform_impl::DeviceId);
 
-impl Default for DeviceId {
-    fn default() -> Self {
-        Self::dummy()
-    }
-}
-
 impl DeviceId {
-    /// Returns a dummy id, useful for unit testing.
-    ///
-    /// # Notes
-    ///
-    /// The only guarantee made about the return value of this function is that
-    /// it will always be equal to itself and to future values returned by this function.
-    /// No other guarantees are made. This may be equal to a real `DeviceId`.
-    pub const fn dummy() -> Self {
+    #[cfg(test)]
+    pub(crate) const fn dummy() -> Self {
         DeviceId(platform_impl::DeviceId::dummy())
     }
 }
@@ -466,14 +454,8 @@ impl DeviceId {
 pub struct FingerId(pub(crate) platform_impl::FingerId);
 
 impl FingerId {
-    /// Returns a dummy id, useful for unit testing.
-    ///
-    /// # Notes
-    ///
-    /// The only guarantee made about the return value of this function is that
-    /// it will always be equal to itself and to future values returned by this function.
-    /// No other guarantees are made. This may be equal to a real `FingerId`.
-    pub const fn dummy() -> Self {
+    #[cfg(test)]
+    pub(crate) const fn dummy() -> Self {
         FingerId(platform_impl::FingerId::dummy())
     }
 }
@@ -1056,7 +1038,7 @@ mod tests {
                 use crate::window::WindowId;
 
                 // Mainline events.
-                let wid = WindowId::dummy();
+                let wid = WindowId::from_raw(0);
                 x(NewEvents(event::StartCause::Init));
                 x(AboutToWait);
                 x(LoopExiting);

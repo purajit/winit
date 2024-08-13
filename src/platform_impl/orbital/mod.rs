@@ -105,10 +105,6 @@ pub struct WindowId {
 }
 
 impl WindowId {
-    pub const fn dummy() -> Self {
-        WindowId { fd: u64::MAX }
-    }
-
     pub const fn into_raw(self) -> u64 {
         self.fd
     }
@@ -122,6 +118,7 @@ impl WindowId {
 pub struct DeviceId;
 
 impl DeviceId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         DeviceId
     }
@@ -131,6 +128,7 @@ impl DeviceId {
 pub struct FingerId;
 
 impl FingerId {
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         FingerId
     }

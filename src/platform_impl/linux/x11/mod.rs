@@ -812,6 +812,7 @@ impl<'a> Deref for DeviceInfo<'a> {
 pub struct DeviceId(xinput::DeviceId);
 
 impl DeviceId {
+    #[cfg(test)]
     #[allow(unused)]
     pub const fn dummy() -> Self {
         DeviceId(0)
@@ -822,6 +823,7 @@ impl DeviceId {
 pub struct FingerId(u32);
 
 impl FingerId {
+    #[cfg(test)]
     #[allow(unused)]
     pub const fn dummy() -> Self {
         FingerId(0)

@@ -1,13 +1,18 @@
-#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DeviceId(i32);
+#[derive(Debug, Copy, Clone, Eq, PartialEq, PartialOrd, Ord, Hash)]
+pub enum DeviceId {
+    Wheel,
+    Keyboard,
+    Id(i32),
+}
 
 impl DeviceId {
     pub fn new(pointer_id: i32) -> Self {
-        Self(pointer_id)
+        Self::Id(pointer_id)
     }
 
+    #[cfg(test)]
     pub const fn dummy() -> Self {
-        Self(-1)
+        Self::Id(-1)
     }
 }
 
@@ -22,6 +27,7 @@ impl FingerId {
         Self { pointer_id, primary }
     }
 
+    #[cfg(test)]
     pub const fn dummy() -> Self {
         Self { pointer_id: -1, primary: false }
     }
