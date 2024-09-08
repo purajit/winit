@@ -12,8 +12,8 @@ use orbclient::{
 use smol_str::SmolStr;
 
 use super::{
-    KeyEventExtra, MonitorHandle, PlatformSpecificEventLoopAttributes, RedoxSocket,
-    TimeSocket, WindowId, WindowProperties,
+    KeyEventExtra, MonitorHandle, PlatformSpecificEventLoopAttributes, RedoxSocket, TimeSocket,
+    WindowId, WindowProperties,
 };
 use crate::application::ApplicationHandler;
 use crate::error::{EventLoopError, NotSupportedError, RequestError};
