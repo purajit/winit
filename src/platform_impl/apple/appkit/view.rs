@@ -833,7 +833,7 @@ impl WinitView {
     }
 
     fn queue_event(&self, event: WindowEvent) {
-        let window_id = RootWindowId(self.window().id());
+        let window_id = self.window().id();
         self.ivars().app_state.maybe_queue_with_handler(move |app, event_loop| {
             app.window_event(event_loop, window_id, event);
         });

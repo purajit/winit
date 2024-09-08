@@ -122,6 +122,9 @@ impl Default for PlatformSpecificEventLoopAttributes {
     }
 }
 
+// Android currently only supports one window
+const GLOBAL_WINDOW: WindowId = WindowId::from_raw(0);
+
 impl EventLoop {
     pub(crate) fn new(
         attributes: &PlatformSpecificEventLoopAttributes,
@@ -163,6 +166,7 @@ impl EventLoop {
         app: &mut A,
     ) {
         trace!("Mainloop iteration");
+        let window_id = GLOBAL_WINDOW;
 
         let cause = self.cause;
         let mut pending_redraw = self.pending_redraw;
@@ -187,13 +191,11 @@ impl EventLoop {
                 },
                 MainEvent::GainedFocus => {
                     HAS_FOCUS.store(true, Ordering::Relaxed);
-                    let window_id = window::WindowId(WindowId);
                     let event = event::WindowEvent::Focused(true);
                     app.window_event(&self.window_target, window_id, event);
                 },
                 MainEvent::LostFocus => {
                     HAS_FOCUS.store(false, Ordering::Relaxed);
-                    let window_id = window::WindowId(WindowId);
                     let event = event::WindowEvent::Focused(false);
                     app.window_event(&self.window_target, window_id, event);
                 },
@@ -202,7 +204,6 @@ impl EventLoop {
                     let scale_factor = scale_factor(&self.android_app);
                     if (scale_factor - old_scale_factor).abs() < f64::EPSILON {
                         let new_surface_size = Arc::new(Mutex::new(screen_size(&self.android_app)));
-                        let window_id = window::WindowId(WindowId);
                         let event = event::WindowEvent::ScaleFactorChanged {
                             surface_size_writer: SurfaceSizeWriter::new(Arc::downgrade(
                                 &new_surface_size,
@@ -286,7 +287,6 @@ impl EventLoop {
                 } else {
                     PhysicalSize::new(0, 0)
                 };
-                let window_id = window::WindowId(WindowId);
                 let event = event::WindowEvent::SurfaceResized(size);
                 app.window_event(&self.window_target, window_id, event);
             }
@@ -294,7 +294,6 @@ impl EventLoop {
             pending_redraw |= self.redraw_flag.get_and_reset();
             if pending_redraw {
                 pending_redraw = false;
-                let window_id = window::WindowId(WindowId);
                 let event = event::WindowEvent::RedrawRequested;
                 app.window_event(&self.window_target, window_id, event);
             }
@@ -315,7 +314,6 @@ impl EventLoop {
         let mut input_status = InputStatus::Handled;
         match event {
             InputEvent::MotionEvent(motion_event) => {
-                let window_id = window::WindowId(WindowId);
                 let device_id = Some(event::DeviceId(DeviceId(motion_event.device_id())));
 
                 let phase = match motion_event.action() {
@@ -358,7 +356,7 @@ impl EventLoop {
                             force: Some(Force::Normalized(pointer.pressure() as f64)),
                         });
 
-                        app.window_event(&self.window_target, window_id, event);
+                        app.window_event(&self.window_target, GLOBAL_WINDOW, event);
                     }
                 }
             },
@@ -386,7 +384,6 @@ impl EventLoop {
                             &mut self.combining_accent,
                         );
 
-                        let window_id = window::WindowId(WindowId);
                         let event = event::WindowEvent::KeyboardInput {
                             device_id: Some(event::DeviceId(DeviceId(key.device_id()))),
                             event: event::KeyEvent {
@@ -401,7 +398,7 @@ impl EventLoop {
                             is_synthetic: false,
                         };
 
-                        app.window_event(&self.window_target, window_id, event);
+                        app.window_event(&self.window_target, GLOBAL_WINDOW, event);
                     },
                 }
             },
@@ -665,19 +662,6 @@ impl OwnedDisplayHandle {
 }
 
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-pub(crate) struct WindowId;
-
-impl WindowId {
-    pub const fn into_raw(self) -> u64 {
-        0
-    }
-
-    pub const fn from_raw(_id: u64) -> Self {
-        Self
-    }
-}
-
-#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct DeviceId(i32);
 
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -758,7 +742,7 @@ impl rwh_06::HasWindowHandle for Window {
 
 impl CoreWindow for Window {
     fn id(&self) -> window::WindowId {
-        window::WindowId(WindowId)
+        GLOBAL_WINDOW
     }
 
     fn primary_monitor(&self) -> Option<RootMonitorHandle> {
