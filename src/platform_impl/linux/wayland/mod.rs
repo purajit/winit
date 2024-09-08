@@ -21,13 +21,6 @@ mod window;
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DeviceId;
 
-impl DeviceId {
-    #[cfg(test)]
-    pub const fn dummy() -> Self {
-        DeviceId
-    }
-}
-
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct FingerId(i32);
 

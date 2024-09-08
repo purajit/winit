@@ -12,11 +12,6 @@ impl DeviceId {
             None
         }
     }
-
-    #[cfg(test)]
-    pub const fn dummy() -> Self {
-        Self(0)
-    }
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]

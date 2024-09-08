@@ -63,13 +63,6 @@ unsafe impl Sync for PlatformSpecificWindowAttributes {}
 pub struct DeviceId(u32);
 
 impl DeviceId {
-    #[cfg(test)]
-    pub const fn dummy() -> Self {
-        DeviceId(0)
-    }
-}
-
-impl DeviceId {
     pub fn persistent_identifier(&self) -> Option<String> {
         if self.0 != 0 {
             raw_input::get_raw_input_device_name(self.0 as HANDLE)

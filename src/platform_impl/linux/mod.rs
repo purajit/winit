@@ -129,16 +129,6 @@ pub enum DeviceId {
     Wayland(wayland::DeviceId),
 }
 
-impl DeviceId {
-    #[cfg(test)]
-    pub const fn dummy() -> Self {
-        #[cfg(wayland_platform)]
-        return DeviceId::Wayland(wayland::DeviceId::dummy());
-        #[cfg(all(not(wayland_platform), x11_platform))]
-        return DeviceId::X(x11::DeviceId::dummy());
-    }
-}
-
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum FingerId {
     #[cfg(x11_platform)]

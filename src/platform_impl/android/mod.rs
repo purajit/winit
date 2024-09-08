@@ -680,13 +680,6 @@ impl WindowId {
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct DeviceId(i32);
 
-impl DeviceId {
-    #[cfg(test)]
-    pub const fn dummy() -> Self {
-        DeviceId(0)
-    }
-}
-
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct FingerId(i32);
 

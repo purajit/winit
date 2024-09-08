@@ -439,13 +439,6 @@ pub enum WindowEvent {
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DeviceId(pub(crate) platform_impl::DeviceId);
 
-impl DeviceId {
-    #[cfg(test)]
-    pub(crate) const fn dummy() -> Self {
-        DeviceId(platform_impl::DeviceId::dummy())
-    }
-}
-
 /// Identifier of a finger in a touch event.
 ///
 /// Whenever a touch event is received it contains a `FingerId` which uniquely identifies the finger
@@ -1147,14 +1140,6 @@ mod tests {
             let _ = format!("{:?}", event);
         });
         let _ = event::StartCause::Init.clone();
-
-        let did = crate::event::DeviceId::dummy().clone();
-        HashSet::new().insert(did);
-        let mut set = [did, did, did];
-        set.sort_unstable();
-        let mut set2 = BTreeSet::new();
-        set2.insert(did);
-        set2.insert(did);
 
         let fid = crate::event::FingerId::dummy().clone();
         HashSet::new().insert(fid);
