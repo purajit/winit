@@ -341,7 +341,7 @@ pub trait EventLoopBuilderExtMacOS {
 impl<T> EventLoopBuilderExtMacOS for EventLoopBuilder<T> {
     #[inline]
     fn with_activation_policy(&mut self, activation_policy: ActivationPolicy) -> &mut Self {
-        self.platform_specific.activation_policy = activation_policy;
+        self.platform_specific.activation_policy = Some(activation_policy);
         self
     }
 

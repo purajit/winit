@@ -18,7 +18,7 @@ use crate::window::WindowId as RootWindowId;
 
 #[derive(Debug)]
 pub(super) struct AppState {
-    activation_policy: NSApplicationActivationPolicy,
+    activation_policy: Option<NSApplicationActivationPolicy>,
     default_menu: bool,
     activate_ignoring_other_apps: bool,
     run_loop: RunLoop,
@@ -74,7 +74,7 @@ declare_class!(
 impl ApplicationDelegate {
     pub(super) fn new(
         mtm: MainThreadMarker,
-        activation_policy: NSApplicationActivationPolicy,
+        activation_policy: Option<NSApplicationActivationPolicy>,
         default_menu: bool,
         activate_ignoring_other_apps: bool,
     ) -> Retained<Self> {
@@ -111,7 +111,9 @@ impl ApplicationDelegate {
         // We need to delay setting the activation policy and activating the app
         // until `applicationDidFinishLaunching` has been called. Otherwise the
         // menu bar is initially unresponsive on macOS 10.15.
-        app.setActivationPolicy(self.ivars().activation_policy);
+        if self.ivars().activation_policy.is_some() {
+            app.setActivationPolicy(self.ivars().activation_policy.unwrap());
+        }
 
         window_activation_hack(&app);
         #[allow(deprecated)]
